@@ -8,20 +8,23 @@ void pild(studentas& temp) {
 	int tmp = 0;
 	do {
 		cout << "Iveskite pazymius. Noredami baigti iveskite -1. " << endl;
-		do {
+		while (true) {
 			try {
 				cin >> tmp;
-				if (cin && tmp >= 0 && tmp <= 10) throw tmp;
-				else if (tmp != -1) {
-					temp.paz.clear();
-					break;
+				if (tmp == -1) break;
+				if (!cin || tmp < 0 || tmp > 10) {
+					string error = "Ivesti galima tik sveikus skaicius nuo 0 iki 10. \n";
+					throw error;
 				}
+
+				else temp.paz.push_back(tmp);
 			}
-			catch (int tmp) {
-				temp.paz.push_back(tmp);
+			catch (string error) {
+				temp.paz.clear();
+				cout << error;
+				break;
 			}
-		} while (tmp != -1);
-		if (temp.paz.size() == 0) cout << "Ivesti galima tik sveikus skaicius nuo 0 iki 10. " << endl;
+		}
 		cin.clear();
 		cin.ignore(10000, '\n');
 	} while (temp.paz.size() == 0);			//ciklas kartojamas tuo atveju, jeigu buvo bloga ivestis
@@ -30,18 +33,20 @@ void pild(studentas& temp) {
 		try {
 			cout << "Iveskite egzamino paz. ";
 			cin >> tmp;
-			if (cin && tmp >= 0 && tmp <= 10) throw tmp;
+			if (!cin || tmp < 0 || tmp > 10) {
+				string error = "Egzamino paz. turi buti skaicius nuo 0 iki 10. ";
+				throw error;
+			}
 			else {
-				cin.clear();
-				cin.ignore(10000, '\n');
-				cout << "Egzamino paz. turi buti skaicius nuo 0 iki 10. " << endl;
-				cout << "Iveskite egzamino paz. ";
+				temp.egz = tmp;
+				break;
 			}
 		}
-		catch (int tmp) {
-			temp.egz = tmp;
-			break;
+		catch (string error) {
+			cout << error;
 		}
+		cin.clear();
+		cin.ignore(10000, '\n');
 	}
 }
 
@@ -155,11 +160,14 @@ void pildFailas(vector<studentas>& grupe) {
 		try {
 			cin >> pavad;
 			df.open(pavad);
-			if (df) throw pavad;
-			else cout << "Toks failas neegzistuoja. Bandykite ivesti is naujo: ";
+			if (!df) {
+				string error = "Toks failas neegzistuoja. Bandykite ivesti is naujo: ";
+				throw error;
+			}
+			else break;
 		}
-		catch (string pavad) {
-			break;
+		catch (string error) {
+			cout << error;
 		}
 	} while (true);
 	
@@ -196,13 +204,14 @@ void pildRandom(vector<studentas>& grupe) {
 		try {
 			cout << "Kiek studentu sudaro grupe? ";
 			cin >> n;
-			if (cin && n >= 1) throw n;
-			else {
-				cout << "Grupe gali sudaryti tik naturalusis skaicius studentu. ";
+			if (!cin || n < 1) {
+				string error = "Grupe gali sudaryti tik naturalusis skaicius studentu. \n";
+				throw error;
 			}
+			else break;
 		}
-		catch (...) {
-			break;
+		catch (string error) {
+			cout << error;
 		}
 		cin.clear();
 		cin.ignore(10000, '\n');
@@ -212,13 +221,14 @@ void pildRandom(vector<studentas>& grupe) {
 		try {
 			cout << "Koks yra galimas pazymiu kiekis? ";
 			cin >> m;
-			if (cin && m >= 1) throw m;
-			else {
-				cout << "Pazymiu kiekis turi buti naturalusis skaicius. ";
+			if (!cin || m < 1) {
+				string error = "Pazymiu kiekis turi buti naturalusis skaicius. \n";
+				throw error;
 			}
+			else break;
 		}
-		catch (...) {
-			break;
+		catch (string error) {
+			cout << error;
 		}
 		cin.clear();
 		cin.ignore(10000, '\n');
