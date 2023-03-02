@@ -9,36 +9,39 @@ void pild(studentas& temp) {
 	do {
 		cout << "Iveskite pazymius. Noredami baigti iveskite -1. " << endl;
 		do {
-			cin >> tmp;
-			if (cin) {
-				if (tmp >= 0 && tmp <= 10) {
-					temp.paz.push_back(tmp);
-				}
+			try {
+				cin >> tmp;
+				if (cin && tmp >= 0 && tmp <= 10) throw tmp;
 				else if (tmp != -1) {
 					temp.paz.clear();
 					break;
 				}
 			}
-			else {
-				temp.paz.clear();
-				break;
+			catch (int tmp) {
+				temp.paz.push_back(tmp);
 			}
 		} while (tmp != -1);
-			
-		
 		if (temp.paz.size() == 0) cout << "Ivesti galima tik sveikus skaicius nuo 0 iki 10. " << endl;
 		cin.clear();
 		cin.ignore(10000, '\n');
 	} while (temp.paz.size() == 0);			//ciklas kartojamas tuo atveju, jeigu buvo bloga ivestis
 
-	cout << "Iveskite egzamino paz. ";
-	cin >> temp.egz;
-	while (!cin || temp.egz < 0 || temp.egz > 10) {
-		cin.clear();
-		cin.ignore(10000, '\n');
-		cout << "Egzamino paz. turi buti skaicius nuo 0 iki 10. " << endl;
-		cout << "Iveskite egzamino paz. ";
-		cin >> temp.egz;
+	while (true) {
+		try {
+			cout << "Iveskite egzamino paz. ";
+			cin >> tmp;
+			if (cin && tmp >= 0 && tmp <= 10) throw tmp;
+			else {
+				cin.clear();
+				cin.ignore(10000, '\n');
+				cout << "Egzamino paz. turi buti skaicius nuo 0 iki 10. " << endl;
+				cout << "Iveskite egzamino paz. ";
+			}
+		}
+		catch (int tmp) {
+			temp.egz = tmp;
+			break;
+		}
 	}
 }
 
@@ -77,6 +80,7 @@ void spausd(vector<studentas>& grupe, int uzkl) {
 
 //Rezultatu spausdinimas
 void spausdFailas(vector<studentas>& grupe, int uzkl) {
+	cout << "Duomenys rasomi i faila..." << endl;
 	ofstream rf("rezultatai.txt");
 	std::stringstream buffer;
 	switch (uzkl) {
@@ -146,14 +150,20 @@ void pildFailas(vector<studentas>& grupe) {
 	std::stringstream df_buffer;
 	string pavad;
 	ifstream df;
+	cout << "Iveskite failo pavadinima: ";
 	do {
-		cout << "Iveskite failo pavadinima: ";
-		cin >> pavad;
-		df.open(pavad);
-		if (!df) cout << "Toks failas neegzistuoja" << endl;
-	} while (!df);
+		try {
+			cin >> pavad;
+			df.open(pavad);
+			if (df) throw pavad;
+			else cout << "Toks failas neegzistuoja. Bandykite ivesti is naujo: ";
+		}
+		catch (string pavad) {
+			break;
+		}
+	} while (true);
 	
-
+	cout << "Failas skaitomas..." << endl;
 	df_buffer << df.rdbuf();
 	df.close();
 
@@ -180,30 +190,42 @@ void pildFailas(vector<studentas>& grupe) {
 void pildRandom(vector<studentas>& grupe) {
 	studentas temp;
 	int n;
-	cout << "Kiek studentu sudaro grupe? ";
-	cin >> n;
-
-	//tikrinama ivestis
-	while (!cin || n < 1) {
-		cin.clear();
-		cin.ignore(10000, '\n');
-		cout << "Grupe gali sudaryti tik naturalusis skaicius studentu. ";
-		cout << "Kiek studentu sudaro grupe? ";
-		cin >> n;
-	}
-
 	int m;
-	cout << "Koks yra galimas pazymiu kiekis? ";
-	cin >> m;
 
-	//tikrinama ivestis
-	while (!cin || m < 1) {
+	while (true) {
+		try {
+			cout << "Kiek studentu sudaro grupe? ";
+			cin >> n;
+			if (cin && n >= 1) throw n;
+			else {
+				cout << "Grupe gali sudaryti tik naturalusis skaicius studentu. ";
+			}
+		}
+		catch (...) {
+			break;
+		}
 		cin.clear();
 		cin.ignore(10000, '\n');
-		cout << "Pazymiu kiekis turi buti naturalusis skaicius. ";
-		cout << "Koks yra galimas pazymiu kiekis? ";
-		cin >> m;
 	}
+	
+	while (true) {	
+		try {
+			cout << "Koks yra galimas pazymiu kiekis? ";
+			cin >> m;
+			if (cin && m >= 1) throw m;
+			else {
+				cout << "Pazymiu kiekis turi buti naturalusis skaicius. ";
+			}
+		}
+		catch (...) {
+			break;
+		}
+		cin.clear();
+		cin.ignore(10000, '\n');
+	}
+
+	cin.clear();
+	cin.ignore(10000, '\n'); 
 
 	std::random_device rd;
 	std::mt19937 mt(rd());
