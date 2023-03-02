@@ -1,7 +1,10 @@
 # Objektinio programavimo pirmas laboratorinis darbas
 
+### v0.3
+- Programoje naudojamas išimčių valdymas
+
 ### v0.2
-- Duomenys prieš išvedimą yra surikiuojami pagal studentų vardus, arba, jei jie vienodi, pavardes.
+- Duomenys prieš išvedimą yra surikiuojami pagal studentų vardus, arba, jei jie vienodi, pavardes
 - Galima rinktis duomenų įvedimą iš failo
 - Duomenis skaitant iš failo, rezultatai yra išvedami į "rezultatai.txt"
 
