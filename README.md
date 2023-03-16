@@ -1,5 +1,11 @@
 # Objektinio programavimo pirmas laboratorinis darbas
 
+### v0.4
+- Sukurtas naujų failų generatorius
+- Spausdinant rezultatus į failus studentai yra surūšiuojami pagal galutinį pažymį (jei paž. mažesnis nei 5, studentas priskiriamas "vargšams", o jei daugiau, "kietiems")
+- Programos veikimo metu skaičiuojama, kiek užtruko failo generavimas, failo skaitymas, studentų rūšiavimas, išvedimas į failus, taip pat visas programos vykdymo laikas
+- Pakoreguota programos veikimo logika, dialogas su vartotoju
+
 ### v0.3
 - Programoje naudojamas išimčių valdymas
 
