@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <random>
 #include <vector>
+#include <chrono>
 
 using std::cout;
 using std::cin;
@@ -24,23 +25,47 @@ using std::sort;
 using std::ifstream;
 using std::ofstream;
 using std::getline;
+using std::to_string;
+using std::lower_bound;
 
 struct studentas {
 	string vardas = "", pavarde = "";
 	vector<int> paz;
 	int egz = 0;
-	double med;
-	double vid;
+	double med = 0;
+	double vid = 0;
+	double galPaz = 0;
 };
 
+class Timer {
+private:
+	std::chrono::time_point<std::chrono::high_resolution_clock> start;
+public:
+	Timer() : start{ std::chrono::high_resolution_clock::now() } {}
+	void reset() {
+		start = std::chrono::high_resolution_clock::now();
+	}
+	double elapsed() const {
+		return std::chrono::duration<double>
+			(std::chrono::high_resolution_clock::now() - start).count();
+	}
+};
 
+extern double visas_laikas;
 
-void pild(studentas& temp);
+void menu(string tekstas, int& uzkl, int sk);
+void intUzklausa(string kint_pavad, int& n);
+void spausdinti(vector<studentas>& grupe);
+void spausdConsole(vector<studentas>& temp, int uzkl);
+void skirstyti(vector<studentas>& temp, int uzkl);
+void spausdFailas(vector<studentas>& grupe, string pavad, string uzkl_paz);
+void pildyti(vector<studentas>& grupe);
+void pildConsole(studentas& temp);
 void pildFailas(vector<studentas>& grupe);
 void pildRandom(vector<studentas>& grupe);
-void spausd(vector<studentas>& temp, int uzkl);
-void spausdFailas(vector<studentas>& temp, int uzkl);
+void generuoti();
 double pazym(studentas temp, double x);
-double vid(studentas temp);
 double med(studentas temp);
-bool palyg(studentas& t1, studentas& t2);
+bool palygVard(studentas& t1, studentas& t2);
+bool palygPaz(studentas& t1, studentas& t2);
+bool palygGal(const studentas& stud, const double& x);
