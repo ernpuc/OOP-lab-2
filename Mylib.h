@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
+#include <sstream>
 #include <iomanip>
+#include <fstream>
 #include <string>
 #include <algorithm>
 #include <random>
@@ -18,17 +20,27 @@ using std::string;
 using std::copy;
 using std::swap;
 using std::vector;
+using std::sort;
+using std::ifstream;
+using std::ofstream;
+using std::getline;
 
 struct studentas {
 	string vardas = "", pavarde = "";
 	vector<int> paz;
 	int egz = 0;
+	double med;
+	double vid;
 };
 
+
+
 void pild(studentas& temp);
-void pildRandom(studentas& temp, int m);
-void spausd(studentas* temp, string uzkl, int n);
+void pildFailas(vector<studentas>& grupe);
+void pildRandom(vector<studentas>& grupe);
+void spausd(vector<studentas>& temp, int uzkl);
+void spausdFailas(vector<studentas>& temp, int uzkl);
 double pazym(studentas temp, double x);
 double vid(studentas temp);
 double med(studentas temp);
-void rikiuoja(studentas& temp);
+bool palyg(studentas& t1, studentas& t2);
