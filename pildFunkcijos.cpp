@@ -1,29 +1,5 @@
 #include "Mylib.h"
 
-void pildyti(vector<studentas>& grupe) {
-	grupe.clear();
-	studentas temp;
-	int uzkl;
-	menu("1 - ivesti duomenis patiems\n2 - ivesti duomenis is failo\n3 - generuoti duomenis atsitiktinai \n", uzkl, 3);
-	switch (uzkl) {
-	case 1:		//Ranka daromas studentu duomenu ivedimas
-		do {
-			pildConsole(temp);
-			grupe.push_back(temp);
-			menu("1 - ivesti dar vieno studento duomenis \n2 - baigti ivedima \n", uzkl, 2);
-		} while (uzkl != 2);
-		break;
-	case 2:		//Duomenu ivedimas is failo
-		pildFailas(grupe);
-		break;
-	case 3:		//Atsitiktinai daromas studentu duomenu ivedimas
-		pildRandom(grupe);
-		break;
-	default:
-		break;
-	}
-}
-
 //Duomenu ivedimas ranka
 void pildConsole(studentas& temp) {
 	cout << "Iveskite varda ir pavarde: ";
@@ -57,9 +33,6 @@ void pildConsole(studentas& temp) {
 		}
 	} while (temp.paz.size() == 0);			//ciklas kartojamas tuo atveju, jeigu buvo bloga ivestis
 
-	temp.med = med(temp);
-	temp.vid = sum / temp.paz.size();
-
 	while (true) {
 		try {
 			cout << "Iveskite egzamino paz. ";
@@ -78,38 +51,31 @@ void pildConsole(studentas& temp) {
 			cout << e.what();
 		}
 	}
+	switch (uzkl_paz) {
+	case 1:
+		temp.galPaz = pazym(temp, sum / temp.paz.size());
+		break;
+	case 2:
+		temp.galPaz = pazym(temp, med(temp));
+		break;
+	}
 	cin.ignore(10000, '\n');
 }
 
 //Duomenu pildymas is failo
-void pildFailas(vector<studentas>& grupe) {
+void pildFailas(vector<studentas>& grupe, string pavad) {
 	studentas temp;
 	string eil;
 	string elem;
 	std::stringstream df_buffer;
-	string pavad;
 	ifstream df;
 	int nd_sk = -3;		//vardas, pavarde ir egzaminas nera iskaiciuojami
 	double sum = 0;
 	int paz;
-	cout << endl;
-	system("dir *.txt");
-	cout << endl;
-	cout << "Iveskite failo pavadinima: ";
-	do {
-		try {
-			cin >> pavad;
-			df.open(pavad);
-			if (!df) {
-				throw std::runtime_error("Toks failas neegzistuoja. Bandykite ivesti is naujo: ");
-			}
-			else break;
-		}
-		catch (std::runtime_error& e) {
-			cout << e.what();
-		}
-	} while (true);
-
+	df.open(pavad);
+	if (!df) {
+		throw std::runtime_error("Toks failas neegzistuoja. Bandykite ivesti is naujo: ");
+	}
 	cout << "Failas skaitomas..." << endl;
 	Timer t;
 	df_buffer << df.rdbuf();
@@ -137,12 +103,20 @@ void pildFailas(vector<studentas>& grupe) {
 			sum += paz;
 		}
 		eilut >> temp.egz;
-		temp.med = med(temp);
-		temp.vid = double(sum) / nd_sk;
+		switch (uzkl_paz) {
+		case 1:
+			temp.galPaz = pazym(temp, sum / temp.paz.size());
+			break;
+		case 2:
+			temp.galPaz = pazym(temp, med(temp));
+			break;
+		}
 		grupe.push_back(temp);
 	}
-	cout << "Failo nuskaitymas uztruko " << t.elapsed() << "s" << endl;
-	visas_laikas += t.elapsed();
+	cout << "Failo is " << grupe.size() << " irasu apdorojimo laikai:" << endl;
+	string line(57, '_');
+	cout << " " << line << endl;
+	spausdLaikas("Failo nuskaitymas", t.elapsed());
 }
 
 //Atsitiktiniu duomenu generavimas
@@ -174,10 +148,15 @@ void pildRandom(vector<studentas>& grupe) {
 			sum += temp.paz.at(i);
 		}
 		temp.egz = dist(mt);
-		temp.med = med(temp);
-		temp.vid = sum / temp.paz.size();
+		switch (uzkl_paz) {
+		case 1:
+			temp.galPaz = pazym(temp, sum / temp.paz.size());
+			break;
+		case 2:
+			temp.galPaz = pazym(temp, med(temp));
+			break;
+		}
 		grupe.push_back(temp);
 		temp.paz.clear();
 	}
-	visas_laikas += t.elapsed();
 }

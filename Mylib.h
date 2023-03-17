@@ -32,8 +32,6 @@ struct studentas {
 	string vardas = "", pavarde = "";
 	vector<int> paz;
 	int egz = 0;
-	double med = 0;
-	double vid = 0;
 	double galPaz = 0;
 };
 
@@ -51,21 +49,27 @@ public:
 	}
 };
 
-extern double visas_laikas;
+extern int uzkl_iv;
+extern int uzkl_paz;
+extern int uzkl_spausd;
+extern int uzkl_vykd;
 
-void menu(string tekstas, int& uzkl, int sk);
+void menu(vector<string> tekstas, int& uzkl);
 void intUzklausa(string kint_pavad, int& n);
 void spausdinti(vector<studentas>& grupe);
 void spausdConsole(vector<studentas>& temp, int uzkl);
+void spausdLaikas(string tekstas, double laikas);
 void skirstyti(vector<studentas>& temp, int uzkl);
 void spausdFailas(vector<studentas>& grupe, string pavad, string uzkl_paz);
-void pildyti(vector<studentas>& grupe);
 void pildConsole(studentas& temp);
-void pildFailas(vector<studentas>& grupe);
+void pildFailas(vector<studentas>& grupe, string pavad);
 void pildRandom(vector<studentas>& grupe);
 void generuoti();
+void testuoti();
 double pazym(studentas temp, double x);
 double med(studentas temp);
 bool palygVard(studentas& t1, studentas& t2);
 bool palygPaz(studentas& t1, studentas& t2);
 bool palygGal(const studentas& stud, const double& x);
+
+std::ostream& operator<< (std::ostream& out, studentas& a); 

@@ -1,30 +1,20 @@
 ﻿#include "Mylib.h"
 
-double visas_laikas = 0;
-
 int main() {
-	vector<studentas> grupe;
-	int uzkl = 0;
-	
+	int uzkl_test = 0;
 	do {
-		menu("1 - generuoti nauja duomenu faila\n2 - vykdyti duomenu ivedima\n", uzkl, 2);
-		switch (uzkl) {
+		if (uzkl_test != 2 || uzkl_vykd == 2) menu({ "generuoti nauja duomenu faila", "vykdyti testavima" }, uzkl_test);
+		switch (uzkl_test) {
 		case 1:
 			generuoti();
 			break;
 		case 2:
-			pildyti(grupe);
+			testuoti();
+			menu({ "testi programos vykdyma nekeiciant parinkciu", "keisti parinktis", "baigti programos vykdyma" }, uzkl_vykd);
 			break;
 		default:
 			break;
 		}
+	} while (uzkl_vykd != 3);
 
-		if (!grupe.empty()) {
-			spausdinti(grupe);
-			break;
-		}
-		menu("1 - testi programos vykdyma\n2 - baigti programos vykdyma\n", uzkl, 2);
-	} while (uzkl != 2);
-
-	cout << "Programos vykdymas uztruko " << visas_laikas << "s" << endl;
 }
