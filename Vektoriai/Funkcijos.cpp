@@ -5,7 +5,7 @@ int uzkl_paz = 0;
 int uzkl_spausd = 0;
 int uzkl_vykd = 0;
 
-void testuoti() {
+void testuoti(vector<double>& test_laikai) {
 	if (uzkl_vykd != 1) {		//jei vartotojas nera pasirinkes testi programos su tomis paciomis parinktimis
 		menu({ "ivesti duomenis patiems", "ivesti duomenis is failo", "generuoti duomenis atsitiktinai" }, uzkl_iv);
 		menu({ "skaiciuoti galutini pazymi pagal vidurki", "skaiciuoti galutini pazymi pagal mediana" }, uzkl_paz);
@@ -29,14 +29,21 @@ void testuoti() {
 		break;
 	case 2:		//Duomenu ivedimas is failo
 		cout << endl;
-		cout << "Iveskite norimo failo nr: " << endl;
 		system("dir /b *.txt >sar.txt");
 		sar.open("sar.txt");
-		while (!sar.eof()) {
-			if (sar >> pavad && pavad != "vargsai.txt" && pavad != "kieti.txt" && pavad != "sar.txt") failai.push_back(pavad);
+		try {
+			while (!sar.eof()) {
+				if (sar >> pavad && pavad != "vargsai.txt" && pavad != "kieti.txt" && pavad != "sar.txt" && pavad != "testavimas.txt") failai.push_back(pavad);
+			}
+			if (failai.empty()) throw std::runtime_error("Nera nuskaitymui tinkamu failu");
+			cout << "Pasirinkite norimo failo nr: " << endl;
+			menu(failai, uzkl_fail);
+			pavad = failai.at(--uzkl_fail);
 		}
-		menu(failai, uzkl_fail);
-		pavad = failai.at(--uzkl_fail);
+		catch (std::runtime_error& e) {
+			cout << e.what() << endl;
+			return;
+		}
 		sar.close();
 		system("del sar.txt");
 		cout << endl;
@@ -44,14 +51,13 @@ void testuoti() {
 		do {
 			t.reset();
 			try {
-				pildFailas(grupe, pavad);
+				pildFailas(grupe, pavad, test_laikai);
 			}
 			catch (std::runtime_error& e) {
 				cout << e.what();
 			}
 		} while (grupe.empty());
 
-		//pildFailas(grupe, pavad);
 		break;
 	case 3:		//Atsitiktinai daromas studentu duomenu ivedimas
 		pildRandom(grupe);
@@ -60,11 +66,11 @@ void testuoti() {
 		break;
 	}
 
-	spausdinti(grupe);
-	string line1(40, '_'), line2(16, '_');
-	cout << "|" << line1 << "|" << line2 << "|" << endl;
-	if (uzkl_iv == 2 && uzkl_spausd == 1) spausdLaikas("Visas programos vykdymo laikas:", t.elapsed());
-	cout << "|" << line1 << "|" << line2 << "|" << endl;
+	spausdinti(grupe, test_laikai);
+	
+	if (uzkl_iv == 2 && uzkl_spausd == 1) {			//duomenu ivedimas is failo ir isvedimas i faila
+		test_laikai.push_back(t.elapsed());
+	}
 }
 
 //naujo duomenu failo generavimas
