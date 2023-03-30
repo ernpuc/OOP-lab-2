@@ -41,7 +41,7 @@
 | Rezultatų spausdinimas į "kieti.txt"   |      0.000642s |      0.005030s |      0.042048s |      0.455202s |      4.393126s |
 | **Visas programos vykdymo laikas:**    |  **0.008422s** |  **0.038534s** |  **0.375240s** |  **3.639630s** | **35.418379s** |
 
-## Programos veikimo greičio su skirtingų tipų konteineriais analizė
+### Programos veikimo greičio su skirtingų tipų konteineriais analizė
 
 Vektoriai:
 
@@ -73,8 +73,10 @@ Listai:
 | Duomenų rūšiavimas pagal pavardes       |     0.000095s  |     0.001336s  |     0.022058s  |     0.461504s  |     7.019872s  |
 | **Visas matavimo laikas:**              |   **0.002796s**|   **0.028930s**|   **0.347020s**|   **4.232994s**|  **47.877267s**|
 
-
-
+#### Testavimo sistemos parametrai:
+- CPU: AMD Ryzen 5 5600H
+- RAM: 16 GB
+- DISK: SSD
 
 
 
