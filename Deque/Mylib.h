@@ -6,7 +6,7 @@
 #include <string>
 #include <algorithm>
 #include <random>
-#include <vector>
+#include <deque>
 #include <chrono>
 
 using std::cout;
@@ -20,7 +20,7 @@ using std::setprecision;
 using std::string;
 using std::copy;
 using std::swap;
-using std::vector;
+using std::deque;
 using std::sort;
 using std::ifstream;
 using std::ofstream;
@@ -30,7 +30,7 @@ using std::lower_bound;
 
 struct studentas {
 	string vardas = "", pavarde = "";
-	vector<int> paz;
+	deque<int> paz;
 	int egz = 0;
 	double galPaz = 0;
 };
@@ -54,22 +54,24 @@ extern int uzkl_paz;
 extern int uzkl_spausd;
 extern int uzkl_vykd;
 
-void menu(vector<string> tekstas, int& uzkl);
+void menu(deque<string> tekstas, int& uzkl);
 void intUzklausa(string kint_pavad, int& n);
-void spausdinti(vector<studentas>& grupe);
-void spausdConsole(vector<studentas>& temp, int uzkl);
+void spausdinti(deque<studentas>& grupe, deque<double>& test_laikai);
+void spausdConsole(deque<studentas>& temp, int uzkl);
+void skirstyti(deque<studentas>& temp, int uzkl, deque<double>& test_laikai);
+void spausdFailas(deque<studentas>& grupe, string pavad, string uzkl_paz, deque<double>& test_laikai);
 void spausdLaikas(string tekstas, double laikas);
-void skirstyti(vector<studentas>& temp, int uzkl);
-void spausdFailas(vector<studentas>& grupe, string pavad, string uzkl_paz);
+void spausdLentele(deque<double> laikai);
+void spausdLentele(deque <deque< double >> laikai);
 void pildConsole(studentas& temp);
-void pildFailas(vector<studentas>& grupe, string pavad);
-void pildRandom(vector<studentas>& grupe);
+void pildFailas(deque<studentas>& grupe, string pavad, deque<double>& test_laikai);
+void pildRandom(deque<studentas>& grupe);
 void generuoti();
-void testuoti();
+void testuoti(deque<double>& test_laikai);
 double pazym(studentas temp, double x);
 double med(studentas temp);
 bool palygVard(studentas& t1, studentas& t2);
 bool palygPaz(studentas& t1, studentas& t2);
 bool palygGal(const studentas& stud, const double& x);
 
-std::ostream& operator<< (std::ostream& out, studentas& a); 
+std::ostream& operator<< (std::ostream& out, studentas& a);
