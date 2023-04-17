@@ -63,7 +63,7 @@ void pildConsole(studentas& temp) {
 }
 
 //Duomenu pildymas is failo
-void pildFailas(vector<studentas>& grupe, string pavad) {
+void pildFailas(list<studentas>& grupe, string pavad, vector<double>& test_laikai) {
 	studentas temp;
 	string eil;
 	string elem;
@@ -113,14 +113,12 @@ void pildFailas(vector<studentas>& grupe, string pavad) {
 		}
 		grupe.push_back(temp);
 	}
-	cout << "Failo is " << grupe.size() << " irasu apdorojimo laikai:" << endl;
-	string line(57, '_');
-	cout << " " << line << endl;
-	spausdLaikas("Failo nuskaitymas", t.elapsed());
+	test_laikai.push_back(grupe.size());
+	test_laikai.push_back(t.elapsed());
 }
 
 //Atsitiktiniu duomenu generavimas
-void pildRandom(vector<studentas>& grupe) {
+void pildRandom(list<studentas>& grupe) {
 	studentas temp;
 	int n;
 	int m;
@@ -134,18 +132,22 @@ void pildRandom(vector<studentas>& grupe) {
 	std::uniform_int_distribution<int> dist(0, 10);
 
 
-	vector<string> vardas{ "Lukas", "Matas", "Adomas", "Nojus", "Kajus", "Motiejus", "Markas", "Benas", "Herkus", "Jonas", "Dominykas" };
-	vector<string> pavarde{ "Kazlauskas", "Petrauskas", "Jankauskas", "Butkus", "Paulauskas", "Vasiliauskas", "Baranauskas", "Urbonas", "Navickas", "Ramanauskas", "Savickas" };
+	list<string> vardas{ "Lukas", "Matas", "Adomas", "Nojus", "Kajus", "Motiejus", "Markas", "Benas", "Herkus", "Jonas", "Dominykas" };
+	list<string> pavarde{ "Kazlauskas", "Petrauskas", "Jankauskas", "Butkus", "Paulauskas", "Vasiliauskas", "Baranauskas", "Urbonas", "Navickas", "Ramanauskas", "Savickas" };
 
+	
 	for (int i = 0; i < n; i++) {
 		sum = 0;
 		temp.paz.clear();
-		temp.paz.reserve(m);
-		temp.vardas = vardas.at(dist(mt));
-		temp.pavarde = pavarde.at(dist(mt));
+		auto ptr_v = vardas.begin();
+		auto ptr_p = pavarde.begin();
+		advance(ptr_v, dist(mt));
+		advance(ptr_p, dist(mt));
+		temp.vardas = *ptr_v;
+		temp.pavarde = *ptr_p;
 		for (int i = 0; i < m; i++) {
 			temp.paz.push_back(dist(mt));
-			sum += temp.paz.at(i);
+			sum += temp.paz.back();
 		}
 		temp.egz = dist(mt);
 		switch (uzkl_paz) {

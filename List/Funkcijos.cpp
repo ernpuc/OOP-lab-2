@@ -5,7 +5,7 @@ int uzkl_paz = 0;
 int uzkl_spausd = 0;
 int uzkl_vykd = 0;
 
-void testuoti() {
+void testuoti(vector<double>& test_laikai) {
 	if (uzkl_vykd != 1) {		//jei vartotojas nera pasirinkes testi programos su tomis paciomis parinktimis
 		menu({ "ivesti duomenis patiems", "ivesti duomenis is failo", "generuoti duomenis atsitiktinai" }, uzkl_iv);
 		menu({ "skaiciuoti galutini pazymi pagal vidurki", "skaiciuoti galutini pazymi pagal mediana" }, uzkl_paz);
@@ -13,12 +13,13 @@ void testuoti() {
 	}
 
 	Timer t;
-	vector<studentas> grupe;
+	list<studentas> grupe;
 	string pavad;
 	ifstream sar;
-	vector<string> failai;
+	list<string> failai;
 	int uzkl_fail = -1;
 	studentas temp;
+	list<string>::iterator ptr;
 	switch (uzkl_iv) {
 	case 1:		//Ranka daromas studentu duomenu ivedimas
 		do {
@@ -29,14 +30,24 @@ void testuoti() {
 		break;
 	case 2:		//Duomenu ivedimas is failo
 		cout << endl;
-		cout << "Iveskite norimo failo nr: " << endl;
 		system("dir /b *.txt >sar.txt");
 		sar.open("sar.txt");
-		while (!sar.eof()) {
-			if (sar >> pavad && pavad != "vargsai.txt" && pavad != "kieti.txt" && pavad != "sar.txt") failai.push_back(pavad);
+		try {
+			while (!sar.eof()) {
+				if (sar >> pavad && pavad != "vargsai.txt" && pavad != "kieti.txt" && pavad != "sar.txt" && pavad != "testavimas.txt") failai.push_back(pavad);
+			}
+			if (failai.empty()) throw std::runtime_error("Nera nuskaitymui tinkamu failu");
+			cout << "Pasirinkite norimo failo nr: " << endl;
+			menu(failai, uzkl_fail);
+			ptr = failai.begin();
+			advance(ptr, --uzkl_fail);
+			pavad = *ptr;
 		}
-		menu(failai, uzkl_fail);
-		pavad = failai.at(--uzkl_fail);
+		catch (std::runtime_error& e) {
+			cout << e.what() << endl;
+			return;
+		}
+		
 		sar.close();
 		system("del sar.txt");
 		cout << endl;
@@ -44,10 +55,10 @@ void testuoti() {
 		do {
 			t.reset();
 			try {
-				pildFailas(grupe, pavad);
+				pildFailas(grupe, pavad, test_laikai);
 			}
 			catch (std::runtime_error& e) {
-				cout << e.what();
+				cout << e.what() << endl;
 			}
 		} while (grupe.empty());
 
@@ -60,11 +71,11 @@ void testuoti() {
 		break;
 	}
 
-	spausdinti(grupe);
-	string line1(40, '_'), line2(16, '_');
-	cout << "|" << line1 << "|" << line2 << "|" << endl;
-	if (uzkl_iv == 2 && uzkl_spausd == 1) spausdLaikas("Visas programos vykdymo laikas:", t.elapsed());
-	cout << "|" << line1 << "|" << line2 << "|" << endl;
+	spausdinti(grupe, test_laikai);
+
+	if (uzkl_iv == 2 && uzkl_spausd == 1) {			//duomenu ivedimas is failo ir isvedimas i faila
+		test_laikai.push_back(t.elapsed());
+	}
 }
 
 //naujo duomenu failo generavimas
@@ -94,7 +105,7 @@ void generuoti() {
 	cout << "Failas pavadinimu " << pavad << " sugeneruotas per " << t.elapsed() << "s" << endl;
 }
 
-void menu(vector<string> tekstas, int& uzkl) {
+void menu(list<string> tekstas, int& uzkl) {
 	bool geraIvestis = false;
 	int n = 1;
 	cout << endl << "Galimos komandos:" << endl;
@@ -143,10 +154,22 @@ double pazym(studentas temp, double x) {
 
 //Pazymiu medianos skaiciavimas
 double med(studentas temp) {
-	sort(temp.paz.begin(), temp.paz.end());
+	temp.paz.sort();
+	//sort(temp.paz.begin(), temp.paz.end());
 	int n = temp.paz.size();
-	if (n % 2 != 0) return double(temp.paz.at(size_t(n) / 2));
-	else return double(temp.paz.at((size_t(n) - 1) / 2) + temp.paz.at(size_t(n) / 2)) / 2;
+	auto ptr = temp.paz.begin();
+	if (n & 1) {
+		advance(ptr, n / 2);
+		return *ptr;
+	}
+	else {
+		advance(ptr, (n - 1) / 2);
+		return (*ptr + *(++ptr)) / 2;
+	}
+
+
+	/*if (n % 2 != 0) return double(temp.paz.at(size_t(n) / 2));
+	else return double(temp.paz.at((size_t(n) - 1) / 2) + temp.paz.at(size_t(n) / 2)) / 2;*/
 }
 
 
@@ -163,6 +186,6 @@ bool palygGal(const studentas& stud, const double& x) {
 }
 
 std::ostream& operator<< (std::ostream& out, studentas& a) {
-	out << left << setw(15) << a.vardas << setw(15) << a.pavarde << fixed << setprecision(2) << a.galPaz; 
+	out << left << setw(15) << a.vardas << setw(15) << a.pavarde << fixed << setprecision(2) << a.galPaz;
 	return out;
 }
