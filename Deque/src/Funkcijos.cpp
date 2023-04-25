@@ -1,6 +1,7 @@
 #include "Mylib.h"
 
 int uzkl_iv = 0;
+int uzkl_skirst = 0;
 int uzkl_paz = 0;
 int uzkl_spausd = 0;
 int uzkl_vykd = 0;
@@ -11,7 +12,7 @@ void testuoti(deque<double>& test_laikai) {
 		menu({ "skaiciuoti galutini pazymi pagal vidurki", "skaiciuoti galutini pazymi pagal mediana" }, uzkl_paz);
 		menu({ "rezultatus isvesti i faila", "rezultatus isvesti i konsole" }, uzkl_spausd);
 	}
-
+	if (uzkl_spausd == 1) menu({ "studentus skirstyti i konteinerius 1 strategija", "studentus skirstyti i konteinerius 2 strategija", "studentus skirstyti i konteinerius 3 strategija" }, uzkl_skirst);
 	Timer t;
 	deque<studentas> grupe;
 	string pavad;
@@ -19,6 +20,7 @@ void testuoti(deque<double>& test_laikai) {
 	deque<string> failai;
 	int uzkl_fail = -1;
 	studentas temp;
+	deque<string> blogiPavad{ "vargsai.txt", "kieti.txt", "sar.txt", "testavimas.txt", "CMakeLists.txt", "CMakeCache.txt", "install_manifest.txt" };
 	switch (uzkl_iv) {
 	case 1:		//Ranka daromas studentu duomenu ivedimas
 		do {
@@ -33,7 +35,7 @@ void testuoti(deque<double>& test_laikai) {
 		sar.open("sar.txt");
 		try {
 			while (!sar.eof()) {
-				if (sar >> pavad && pavad != "vargsai.txt" && pavad != "kieti.txt" && pavad != "sar.txt" && pavad != "testavimas.txt") failai.push_back(pavad);
+				if (sar >> pavad && gerasPavad(pavad, blogiPavad)) failai.push_back(pavad);
 			}
 			if (failai.empty()) throw std::runtime_error("Nera nuskaitymui tinkamu failu");
 			cout << "Pasirinkite norimo failo nr: " << endl;
@@ -155,6 +157,12 @@ double med(studentas temp) {
 	else return double(temp.paz.at((size_t(n) - 1) / 2) + temp.paz.at(size_t(n) / 2)) / 2;
 }
 
+bool gerasPavad(string x, deque<string> pavad) {
+	for (auto& i : pavad) {
+		if (i == x) return 0;
+	}
+	return 1;
+}
 
 bool palygVard(studentas& t1, studentas& t2) {
 	return (t1.vardas < t2.vardas) ? true : (t1.pavarde < t2.pavarde);
@@ -166,6 +174,10 @@ bool palygPaz(studentas& t1, studentas& t2) {
 
 bool palygGal(const studentas& stud, const double& x) {
 	return stud.galPaz < x;
+}
+
+bool galDaugiau5(studentas stud) {
+	return stud.galPaz >= 5.0;
 }
 
 std::ostream& operator<< (std::ostream& out, studentas& a) {

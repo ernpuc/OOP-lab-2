@@ -1,9 +1,9 @@
 #include "Mylib.h"
 
-void spausdinti(list<studentas>& grupe, vector<double>& test_laikai) {
+void spausdinti(vector<studentas>& grupe, vector<double>& test_laikai) {
 	switch (uzkl_spausd) {
 	case 1:
-		skirstyti(grupe, uzkl_paz, test_laikai);
+		skirst(grupe, uzkl_paz, test_laikai);
 		break;
 	case 2:
 		spausdConsole(grupe, uzkl_paz);
@@ -12,8 +12,8 @@ void spausdinti(list<studentas>& grupe, vector<double>& test_laikai) {
 }
 
 //Rezultatu spausdinimas
-void spausdConsole(list<studentas>& grupe, int uzkl) {
-	grupe.sort(palygVard);
+void spausdConsole(vector<studentas>& grupe, int uzkl) {
+	sort(grupe.begin(), grupe.end(), palygVard);
 	cout << left << setw(15) << "Vardas" << setw(15) << "Pavarde" << setw(20);
 	switch (uzkl) {
 	case 1:
@@ -30,42 +30,60 @@ void spausdConsole(list<studentas>& grupe, int uzkl) {
 			cout << stud << endl;
 		}
 		break;
-	default:
+	}
+}
+
+void skirst(vector<studentas>& grupe, int uzkl, vector<double>& test_laikai) {
+	Timer t;
+	sort(grupe.begin(), grupe.end(), palygPaz);
+	test_laikai.push_back(t.elapsed());
+	t.reset();
+
+	vector<studentas> kieti;
+	vector<studentas> vargsai;
+	switch (uzkl_skirst) {
+	case 1:
+		skirstyti1(grupe, vargsai, kieti);
+		test_laikai.push_back(t.elapsed());
+		t.reset();
+		spausdFailas(vargsai, kieti, uzkl, test_laikai);
+		break;
+	case 2:
+		kieti = skirstyti2(grupe);
+		test_laikai.push_back(t.elapsed());
+		t.reset();
+		spausdFailas(grupe, kieti, uzkl, test_laikai);
+		break;
+	case 3:
+		kieti = skirstyti3(grupe);
+		test_laikai.push_back(t.elapsed());
+		t.reset();
+		spausdFailas(grupe, kieti, uzkl, test_laikai);
 		break;
 	}
 }
 
 //Rezultatu spausdinimas
-void skirstyti(list<studentas>& grupe, int uzkl, vector<double>& test_laikai) {
+void spausdFailas(vector<studentas> vargsai, vector<studentas> kieti, int uzkl, vector<double>& test_laikai) {
 	Timer t;
-	grupe.sort(palygPaz);
-	test_laikai.push_back(t.elapsed());
-	t.reset();
-
-	auto low = lower_bound(grupe.begin(), grupe.end(), 5.0, palygGal);
-	list<studentas> kieti(low, grupe.end());
-	grupe.resize(grupe.size() - kieti.size());
-
-	test_laikai.push_back(t.elapsed());
-	t.reset();
-	grupe.sort(palygVard);
-	kieti.sort(palygVard);
+	sort(vargsai.begin(), vargsai.end(), palygVard);
+	sort(kieti.begin(), kieti.end(), palygVard);
 	test_laikai.push_back(t.elapsed());
 	switch (uzkl) {
 	case 1:
-		spausdFailas(grupe, "vargsai.txt", "(vid.)", test_laikai);
-		spausdFailas(kieti, "kieti.txt", "(vid.)", test_laikai);
+		failas(vargsai, "vargsai.txt", "(vid.)", test_laikai);
+		failas(kieti, "kieti.txt", "(vid.)", test_laikai);
 		break;
 	case 2:
-		spausdFailas(grupe, "vargsai.txt", "(med.)", test_laikai);
-		spausdFailas(kieti, "kieti.txt", "(med.)", test_laikai);
+		failas(vargsai, "vargsai.txt", "(med.)", test_laikai);
+		failas(kieti, "kieti.txt", "(med.)", test_laikai);
 		break;
 	default:
 		break;
 	}
 }
 
-void spausdFailas(list<studentas>& grupe, string pavad, string uzkl_paz, vector<double>& test_laikai) {
+void failas(vector<studentas>& grupe, string pavad, string uzkl_paz, vector<double>& test_laikai) {
 	std::stringstream buffer;
 	Timer t;
 	ofstream rf(pavad);
@@ -77,7 +95,34 @@ void spausdFailas(list<studentas>& grupe, string pavad, string uzkl_paz, vector<
 	rf << buffer.str();
 	rf.close();
 	test_laikai.push_back(t.elapsed());
+}
 
+void skirstyti1(vector<studentas> grupe, vector<studentas>& grupe1, vector<studentas>& grupe2) {
+	for (auto& stud : grupe) {
+		if (stud.galPaz < 5.0) grupe1.push_back(stud);
+		else grupe2.push_back(stud);
+	}
+	//remove_copy_if(grupe.begin(), grupe.end(), std::back_inserter(grupe1), galDaugiau5);
+	//copy_if(grupe.begin(), grupe.end(), std::back_inserter(grupe2), galDaugiau5);
+}
+
+vector<studentas> skirstyti2(vector<studentas>& grupe) {
+	vector<studentas> kieti;
+	for (auto i = grupe.end(); i != grupe.begin(); i--) {
+		if (grupe.back().galPaz >= 5.0) kieti.push_back(grupe.back()), grupe.pop_back();
+		else break;
+	}
+	//copy_if(grupe.begin(), grupe.end(), std::back_inserter(kieti), galDaugiau5);
+	//remove_if(grupe.begin(), grupe.end(), galDaugiau5);
+	return kieti;
+}
+
+vector<studentas> skirstyti3(vector<studentas>& grupe) {
+	//auto low = find_if(grupe.begin(), grupe.end(), galDaugiau5);
+	auto low = lower_bound(grupe.begin(), grupe.end(), 5.0, palygGal);
+	vector<studentas> kieti(low, grupe.end());
+	grupe.resize(grupe.size() - kieti.size());
+	return kieti;
 }
 
 void spausdLentele(vector <vector< double >> laikai) {

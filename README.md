@@ -1,5 +1,45 @@
 # Objektinio programavimo pirmas laboratorinis darbas
 
+## Naudojimosi instrukcija
+
+- Norint įdiegti programą, paleisti RUNMEE.bat failą
+- Paleidus .exe failą sekti konsolėje esančias instrukcijas (programos pradžioje pasirinktos komandos lems programos vykdymo ypatumus)
+
+## Programos versijos
+
+### v1.0
+- Pateiktos trys skirtingos studentų skaidymo į "vargšus" ir "kietus" realizacijos
+
+#### Studentų skirstymo į dvi kategorijas spartos analizė
+
+- Pirma strategija - studentų skaidymas į du naujus konteinerius paliekant juos ir bendrame
+- Antra strategija - studentų skaidymas į du konteinerius perkeliant vienus studentus iš bendro į naują konteinerį
+- Trečia strategija - studentų skaidymas į du konteinerius kuriant naują konteinerį pagal surušiuotą bendrą konteinerį, o šį sumažinant iki reikiamo dydžio
+
+##### Vektoriai
+
+| Irasu skaicius:                         |         1000   |        10000   |       100000   |      1000000   |     10000000   |
+|-----------------------------------------|----------------|----------------|----------------|----------------|----------------|
+| Duomenu skirstymas (pirma strategija)   |     0.000226s  |     0.002328s  |     0.027280s  |     0.377596s  |     3.884641s  |
+| Duomenu skirstymas (antra strategija)   |     0.000146s  |     0.001037s  |     0.013651s  |     0.159438s  |     1.435591s  |
+| Duomenu skirstymas (trečia strategija)  |     0.000048s  |     0.000784s  |     0.012567s  |     0.126463s  |     1.480946s  |
+
+##### Dekai
+
+| Irasu skaicius:                         |         1000   |        10000   |       100000   |      1000000   |     10000000   |
+|-----------------------------------------|----------------|----------------|----------------|----------------|----------------|
+| Duomenu skirstymas (pirma strategija)   |     0.000575s  |     0.006810s  |     0.097976s  |     1.025728s  |    14.279388s  |
+| Duomenu skirstymas (antra strategija)   |     0.000125s  |     0.001727s  |     0.029781s  |     0.348508s  |     3.847409s  |
+| Duomenu skirstymas (trečia strategija)  |     0.000161s  |     0.001885s  |     0.036610s  |     0.437453s  |     5.057705s  |
+
+##### Listai
+
+| Irasu skaicius:                         |         1000   |        10000   |       100000   |      1000000   |     10000000   |
+|-----------------------------------------|----------------|----------------|----------------|----------------|----------------|
+| Duomenu skirstymas (pirma strategija)   |     0.000593s  |     0.008448s  |     0.126668s  |     1.290652s  |    16.339081s  |
+| Duomenu skirstymas (antra strategija)   |     0.000135s  |     0.001842s  |     0.033589s  |     0.447529s  |     5.253159s  |
+| Duomenu skirstymas (trečia strategija)  |     0.000192s  |     0.002959s  |     0.058770s  |     0.814941s  |     8.971007s  |
+
 ### v0.5
 - Pateikta programos realizacija su skirtingų tipų konteineriais (vektoriai, dekai, listai)
 

@@ -1,6 +1,7 @@
 #include "Mylib.h"
 
 int uzkl_iv = 0;
+int uzkl_skirst = 0;
 int uzkl_paz = 0;
 int uzkl_spausd = 0;
 int uzkl_vykd = 0;
@@ -11,15 +12,15 @@ void testuoti(vector<double>& test_laikai) {
 		menu({ "skaiciuoti galutini pazymi pagal vidurki", "skaiciuoti galutini pazymi pagal mediana" }, uzkl_paz);
 		menu({ "rezultatus isvesti i faila", "rezultatus isvesti i konsole" }, uzkl_spausd);
 	}
-
+	if (uzkl_spausd == 1) menu({ "studentus skirstyti i konteinerius 1 strategija", "studentus skirstyti i konteinerius 2 strategija", "studentus skirstyti i konteinerius 3 strategija" }, uzkl_skirst);
 	Timer t;
-	list<studentas> grupe;
+	vector<studentas> grupe;
 	string pavad;
 	ifstream sar;
-	list<string> failai;
+	vector<string> failai;
 	int uzkl_fail = -1;
 	studentas temp;
-	list<string>::iterator ptr;
+	vector<string> blogiPavad{ "vargsai.txt", "kieti.txt", "sar.txt", "testavimas.txt", "CMakeLists.txt", "CMakeCache.txt", "install_manifest.txt" };
 	switch (uzkl_iv) {
 	case 1:		//Ranka daromas studentu duomenu ivedimas
 		do {
@@ -34,20 +35,17 @@ void testuoti(vector<double>& test_laikai) {
 		sar.open("sar.txt");
 		try {
 			while (!sar.eof()) {
-				if (sar >> pavad && pavad != "vargsai.txt" && pavad != "kieti.txt" && pavad != "sar.txt" && pavad != "testavimas.txt") failai.push_back(pavad);
+				if (sar >> pavad && gerasPavad(pavad, blogiPavad)) failai.push_back(pavad);
 			}
 			if (failai.empty()) throw std::runtime_error("Nera nuskaitymui tinkamu failu");
 			cout << "Pasirinkite norimo failo nr: " << endl;
 			menu(failai, uzkl_fail);
-			ptr = failai.begin();
-			advance(ptr, --uzkl_fail);
-			pavad = *ptr;
+			pavad = failai.at(--uzkl_fail);
 		}
 		catch (std::runtime_error& e) {
 			cout << e.what() << endl;
 			return;
 		}
-		
 		sar.close();
 		system("del sar.txt");
 		cout << endl;
@@ -58,11 +56,10 @@ void testuoti(vector<double>& test_laikai) {
 				pildFailas(grupe, pavad, test_laikai);
 			}
 			catch (std::runtime_error& e) {
-				cout << e.what() << endl;
+				cout << e.what();
 			}
 		} while (grupe.empty());
 
-		//pildFailas(grupe, pavad);
 		break;
 	case 3:		//Atsitiktinai daromas studentu duomenu ivedimas
 		pildRandom(grupe);
@@ -105,7 +102,7 @@ void generuoti() {
 	cout << "Failas pavadinimu " << pavad << " sugeneruotas per " << t.elapsed() << "s" << endl;
 }
 
-void menu(list<string> tekstas, int& uzkl) {
+void menu(vector<string> tekstas, int& uzkl) {
 	bool geraIvestis = false;
 	int n = 1;
 	cout << endl << "Galimos komandos:" << endl;
@@ -154,24 +151,18 @@ double pazym(studentas temp, double x) {
 
 //Pazymiu medianos skaiciavimas
 double med(studentas temp) {
-	temp.paz.sort();
-	//sort(temp.paz.begin(), temp.paz.end());
+	sort(temp.paz.begin(), temp.paz.end());
 	int n = temp.paz.size();
-	auto ptr = temp.paz.begin();
-	if (n & 1) {
-		advance(ptr, n / 2);
-		return *ptr;
-	}
-	else {
-		advance(ptr, (n - 1) / 2);
-		return (*ptr + *(++ptr)) / 2;
-	}
-
-
-	/*if (n % 2 != 0) return double(temp.paz.at(size_t(n) / 2));
-	else return double(temp.paz.at((size_t(n) - 1) / 2) + temp.paz.at(size_t(n) / 2)) / 2;*/
+	if (n % 2 != 0) return double(temp.paz.at(size_t(n) / 2));
+	else return double(temp.paz.at((size_t(n) - 1) / 2) + temp.paz.at(size_t(n) / 2)) / 2;
 }
 
+bool gerasPavad(string x, vector<string> pavad) {
+	for (auto& i : pavad) {
+		if (i == x) return 0;
+	}
+	return 1;
+}
 
 bool palygVard(studentas& t1, studentas& t2) {
 	return (t1.vardas < t2.vardas) ? true : (t1.pavarde < t2.pavarde);
@@ -183,6 +174,10 @@ bool palygPaz(studentas& t1, studentas& t2) {
 
 bool palygGal(const studentas& stud, const double& x) {
 	return stud.galPaz < x;
+}
+
+bool galDaugiau5(studentas stud) {
+	return stud.galPaz >= 5.0;
 }
 
 std::ostream& operator<< (std::ostream& out, studentas& a) {
