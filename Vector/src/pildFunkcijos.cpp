@@ -2,48 +2,43 @@
 
 //Duomenu ivedimas ranka
 void pildConsole(studentas& temp) {
+	string vardas, pavarde;
+	vector<int> paz;
+	int egz;
 	cout << "Iveskite varda ir pavarde: ";
-	cin >> temp.vardas >> temp.pavarde;
-	temp.paz.clear();
-	int tmp = 0;
-	double sum = 0;
+	cin >> vardas >> pavarde;
+	int x = 0;
 	do {
-		sum = 0;
 		cin.clear();
 		cin.ignore(10000, '\n');
 		cout << "Iveskite pazymius. Noredami baigti iveskite -1. " << endl;
 		while (true) {
 			try {
-				cin >> tmp;
-				if (tmp == -1) break;
-				if (!cin || tmp < 0 || tmp > 10) {
+				cin >> x;
+				if (x == -1) break;
+				if (!cin || x < 0 || x > 10) {
 					throw std::runtime_error("Ivesti galima tik sveikus skaicius nuo 0 iki 10. \n");
 				}
 
 				else {
-					temp.paz.push_back(tmp);
-					sum += tmp;
+					paz.push_back(x);
 				}
 			}
 			catch (std::runtime_error& e) {
-				temp.paz.clear();
+				paz.clear();
 				cout << e.what();
 				break;
 			}
 		}
-	} while (temp.paz.size() == 0);			//ciklas kartojamas tuo atveju, jeigu buvo bloga ivestis
+	} while (paz.size() == 0);			//ciklas kartojamas tuo atveju, jeigu buvo bloga ivestis
 
 	while (true) {
 		try {
 			cout << "Iveskite egzamino paz. ";
-			cin >> tmp;
-			if (!cin || tmp < 0 || tmp > 10) {
+			if (!(cin >> egz) || egz < 0 || egz > 10) {
 				throw std::runtime_error("Egzamino paz. turi buti skaicius nuo 0 iki 10. ");
 			}
-			else {
-				temp.egz = tmp;
-				break;
-			}
+			else break;
 		}
 		catch (std::runtime_error& e) {
 			cin.clear();
@@ -51,27 +46,17 @@ void pildConsole(studentas& temp) {
 			cout << e.what();
 		}
 	}
-	switch (uzkl_paz) {
-	case 1:
-		temp.galPaz = pazym(temp, sum / temp.paz.size());
-		break;
-	case 2:
-		temp.galPaz = pazym(temp, med(temp));
-		break;
-	}
+	studentas tmp(vardas, pavarde, paz, egz);
+	temp = tmp;
 	cin.ignore(10000, '\n');
 }
 
 //Duomenu pildymas is failo
 void pildFailas(vector<studentas>& grupe, string pavad, vector<double>& test_laikai) {
-	studentas temp;
 	string eil;
 	string elem;
 	std::stringstream df_buffer;
 	ifstream df;
-	int nd_sk = -3;		//vardas, pavarde ir egzaminas nera iskaiciuojami
-	double sum = 0;
-	int paz;
 	df.open(pavad);
 	if (!df) {
 		throw std::runtime_error("Toks failas neegzistuoja. Bandykite ivesti is naujo: ");
@@ -82,36 +67,14 @@ void pildFailas(vector<studentas>& grupe, string pavad, vector<double>& test_lai
 	df.close();
 
 	if (!df_buffer.eof()) getline(df_buffer, eil);		//praleidziama pirma eilute
-	std::stringstream eilute(eil);
-	while (eilute >> elem) {
-		if (eilute.eof()) break;
-		nd_sk++;
-	}
 
 	while (df_buffer) {
-		sum = 0;
-		temp.paz.clear();
 		if (df_buffer.eof()) break;
 		getline(df_buffer, eil);
 		if (eil.empty()) break;
 		std::stringstream eilut(eil);
-		eilut >> temp.vardas >> temp.pavarde;
-		for (int i = 0; i < nd_sk; i++) {
-			eilut >> elem;
-			paz = stoi(elem);
-			temp.paz.push_back(paz);
-			sum += paz;
-		}
-		eilut >> temp.egz;
-		switch (uzkl_paz) {
-		case 1:
-			temp.galPaz = pazym(temp, sum / temp.paz.size());
-			break;
-		case 2:
-			temp.galPaz = pazym(temp, med(temp));
-			break;
-		}
-		grupe.push_back(temp);
+		studentas tmp(eilut);
+		grupe.push_back(tmp);
 	}
 	test_laikai.push_back(grupe.size());
 	test_laikai.push_back(t.elapsed());
@@ -119,10 +82,11 @@ void pildFailas(vector<studentas>& grupe, string pavad, vector<double>& test_lai
 
 //Atsitiktiniu duomenu generavimas
 void pildRandom(vector<studentas>& grupe) {
-	studentas temp;
+	string vardas_, pavarde_;
+	vector<int> paz;
+	int egz; 
 	int n;
 	int m;
-	double sum = 0;
 	intUzklausa("studentu skaicius", n);
 	intUzklausa("pazymiu kiekis", m);
 
@@ -136,25 +100,15 @@ void pildRandom(vector<studentas>& grupe) {
 	vector<string> pavarde{ "Kazlauskas", "Petrauskas", "Jankauskas", "Butkus", "Paulauskas", "Vasiliauskas", "Baranauskas", "Urbonas", "Navickas", "Ramanauskas", "Savickas" };
 
 	for (int i = 0; i < n; i++) {
-		sum = 0;
-		temp.paz.clear();
-		temp.paz.reserve(m);
-		temp.vardas = vardas.at(dist(mt));
-		temp.pavarde = pavarde.at(dist(mt));
+		paz.reserve(m);
+		vardas_ = vardas.at(dist(mt));
+		pavarde_ = pavarde.at(dist(mt));
 		for (int i = 0; i < m; i++) {
-			temp.paz.push_back(dist(mt));
-			sum += temp.paz.at(i);
+			paz.push_back(dist(mt));
 		}
-		temp.egz = dist(mt);
-		switch (uzkl_paz) {
-		case 1:
-			temp.galPaz = pazym(temp, sum / temp.paz.size());
-			break;
-		case 2:
-			temp.galPaz = pazym(temp, med(temp));
-			break;
-		}
+		egz = dist(mt);
+		studentas temp(vardas_, pavarde_, paz, egz);
 		grupe.push_back(temp);
-		temp.paz.clear();
+		paz.clear();
 	}
 }

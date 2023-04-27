@@ -8,6 +8,7 @@
 #include <random>
 #include <deque>
 #include <chrono>
+#include "Studentas.h"
 
 using std::cout;
 using std::cin;
@@ -32,13 +33,6 @@ using std::copy_if;
 using std::remove_copy_if;
 using std::remove_if;
 using std::partition;
-
-struct studentas {
-	string vardas = "", pavarde = "";
-	deque<int> paz;
-	int egz = 0;
-	double galPaz = 0;
-};
 
 class Timer {
 private:
@@ -77,12 +71,6 @@ void pildFailas(deque<studentas>& grupe, string pavad, deque<double>& test_laika
 void pildRandom(deque<studentas>& grupe);
 void generuoti();
 void testuoti(deque<double>& test_laikai);
-double pazym(studentas temp, double x);
-double med(studentas temp);
 bool gerasPavad(string x, deque<string> pavad);
-bool palygVard(studentas& t1, studentas& t2);
-bool palygPaz(studentas& t1, studentas& t2);
-bool palygGal(const studentas& stud, const double& x);
-bool galDaugiau5(studentas stud);
 
-std::ostream& operator<< (std::ostream& out, studentas& a);
+
