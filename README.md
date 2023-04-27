@@ -7,6 +7,81 @@
 
 ## Programos versijos
 
+### v1.1
+- Programa realizuota su klasėmmis
+
+#### Programos veikimo greičio su studentų klase (v1.1.) ir struktūra (v1.0) analizė
+
+v1.1
+
+| Irasu skaicius:                         |      1000000   |     10000000   |
+|-----------------------------------------|----------------|----------------|
+| Failo nuskaitymas                       |     2.489588s  |    25.402104s  |
+| Duomenu rusiavimas pagal pazymi         |     0.073588s  |     0.797581s  |
+| Duomenu skirstymas                      |     0.157918s  |     1.504101s  |
+| Duomenu rusiavimas pagal pavardes       |     0.973850s  |    11.752730s  |
+| Rezultatu spausdinimas i vargsai.txt    |     0.386475s  |     3.906130s  |
+| Rezultatu spausdinimas i kieti.txt      |     0.402160s  |     4.160941s  |
+| Visas programos vykdymo laikas:         |     4.777175s  |    50.263985s  |
+
+
+v1.0
+
+| Irasu skaicius:                         |      1000000   |     10000000   |
+|-----------------------------------------|----------------|----------------|
+| Failo nuskaitymas                       |     1.935183s  |    19.500268s  |
+| Duomenu rusiavimas pagal pazymi         |     0.072969s  |     0.802412s  |
+| Duomenu skirstymas                      |     0.129385s  |     1.373299s  |
+| Duomenu rusiavimas pagal pavardes       |     0.459012s  |     5.295557s  |
+| Rezultatu spausdinimas i vargsai.txt    |     0.375047s  |     3.987322s  |
+| Rezultatu spausdinimas i kieti.txt      |     0.394954s  |     3.947082s  |
+| Visas programos vykdymo laikas:         |     3.605573s  |    37.451121s  |
+
+
+#### Programos veikimo su skirtingais kompiliatoriaus optimizavimo lygiais analizė
+
+-O1
+
+| Irasu skaicius:                         |      1000000   |     10000000   |
+|-----------------------------------------|----------------|----------------|
+| Failo nuskaitymas                       |     2.596605s  |    26.404050s  |
+| Duomenu rusiavimas pagal pazymi         |     0.105774s  |     1.050675s  |
+| Duomenu skirstymas                      |     0.192379s  |     2.078027s  |
+| Duomenu rusiavimas pagal pavardes       |     1.101112s  |    13.076459s  |
+| Rezultatu spausdinimas i vargsai.txt    |     0.403579s  |     3.895943s  |
+| Rezultatu spausdinimas i kieti.txt      |     0.433215s  |     4.195289s  |
+| Visas programos vykdymo laikas:         |     5.085841s  |    53.189120s  |
+
+-Vector.exe užima 88,5 KB 
+
+-O2
+
+| Irasu skaicius:                         |      1000000   |     10000000   |
+|-----------------------------------------|----------------|----------------|
+| Failo nuskaitymas                       |     2.489588s  |    25.402104s  |
+| Duomenu rusiavimas pagal pazymi         |     0.073588s  |     0.797581s  |
+| Duomenu skirstymas                      |     0.157918s  |     1.504101s  |
+| Duomenu rusiavimas pagal pavardes       |     0.973850s  |    11.752730s  |
+| Rezultatu spausdinimas i vargsai.txt    |     0.386475s  |     3.906130s  |
+| Rezultatu spausdinimas i kieti.txt      |     0.402160s  |     4.160941s  |
+| Visas programos vykdymo laikas:         |     4.777175s  |    50.263985s  |
+
+-Vector.exe užima 105 KB
+
+-Ox
+
+| Irasu skaicius:                         |      1000000   |     10000000   |
+|-----------------------------------------|----------------|----------------|
+| Failo nuskaitymas                       |     2.538286s  |    26.688960s  |
+| Duomenu rusiavimas pagal pazymi         |     0.074360s  |     0.788425s  |
+| Duomenu skirstymas                      |     0.191593s  |     2.049583s  |
+| Duomenu rusiavimas pagal pavardes       |     0.932755s  |    11.161583s  |
+| Rezultatu spausdinimas i vargsai.txt    |     0.399271s  |     3.904824s  |
+| Rezultatu spausdinimas i kieti.txt      |     0.429001s  |     4.163725s  |
+| Visas programos vykdymo laikas:         |     4.793937s  |    51.256823s  |
+
+-Vector.exe užima 107 KB
+
 ### v1.0
 - Pateiktos trys skirtingos studentų skaidymo į "vargšus" ir "kietus" realizacijos
 
