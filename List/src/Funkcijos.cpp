@@ -149,55 +149,9 @@ void intUzklausa(string kint_pavad, int& n) {
 	cin.ignore(10000, '\n');
 }
 
-//Galutinio pazymio skaiciavimas
-double pazym(studentas temp, double x) {
-	return 0.4 * x + 0.6 * temp.egz;
-}
-
-//Pazymiu medianos skaiciavimas
-double med(studentas temp) {
-	temp.paz.sort();
-	//sort(temp.paz.begin(), temp.paz.end());
-	int n = temp.paz.size();
-	auto ptr = temp.paz.begin();
-	if (n & 1) {
-		advance(ptr, n / 2);
-		return *ptr;
-	}
-	else {
-		advance(ptr, (n - 1) / 2);
-		return (*ptr + *(++ptr)) / 2;
-	}
-
-
-	/*if (n % 2 != 0) return double(temp.paz.at(size_t(n) / 2));
-	else return double(temp.paz.at((size_t(n) - 1) / 2) + temp.paz.at(size_t(n) / 2)) / 2;*/
-}
-
 bool gerasPavad(string x, vector<string> pavad) {
 	for (auto& i : pavad) {
 		if (i == x) return 0;
 	}
 	return 1;
-}
-
-bool palygVard(studentas& t1, studentas& t2) {
-	return (t1.vardas < t2.vardas) ? true : (t1.pavarde < t2.pavarde);
-}
-
-bool palygPaz(studentas& t1, studentas& t2) {
-	return t1.galPaz < t2.galPaz;
-}
-
-bool palygGal(const studentas& stud, const double& x) {
-	return stud.galPaz < x;
-}
-
-bool galDaugiau5(studentas stud) {
-	return stud.galPaz >= 5.0;
-}
-
-std::ostream& operator<< (std::ostream& out, studentas& a) {
-	out << left << setw(15) << a.vardas << setw(15) << a.pavarde << fixed << setprecision(2) << a.galPaz;
-	return out;
 }

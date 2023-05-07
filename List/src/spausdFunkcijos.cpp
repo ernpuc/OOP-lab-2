@@ -99,7 +99,7 @@ void failas(list<studentas>& grupe, string pavad, string uzkl_paz, vector<double
 
 void skirstyti1(list<studentas> grupe, list<studentas>& grupe1, list<studentas>& grupe2) {
 	for (auto& stud : grupe) {
-		if (stud.galPaz < 5.0) grupe1.push_back(stud);
+		if (stud.galPaz() < 5.0) grupe1.push_back(stud);
 		else grupe2.push_back(stud);
 	}
 	//remove_copy_if(grupe.begin(), grupe.end(), std::back_inserter(grupe1), galDaugiau5);
@@ -108,8 +108,8 @@ void skirstyti1(list<studentas> grupe, list<studentas>& grupe1, list<studentas>&
 
 list<studentas> skirstyti2(list<studentas>& grupe) {
 	list<studentas> kieti;
-	for (auto i = grupe.end(); i != grupe.begin(); i--) {
-		if (grupe.back().galPaz >= 5.0) kieti.push_back(grupe.back()), grupe.pop_back();
+	for (auto i = grupe.end(); i != grupe.begin();) {
+		if (grupe.back().galPaz() >= 5.0) kieti.push_back(grupe.back()), grupe.pop_back();
 		else break;
 	}
 	//copy_if(grupe.begin(), grupe.end(), std::back_inserter(kieti), galDaugiau5);
@@ -118,8 +118,8 @@ list<studentas> skirstyti2(list<studentas>& grupe) {
 }
 
 list<studentas> skirstyti3(list<studentas>& grupe) {
-	//auto low = find_if(grupe.begin(), grupe.end(), galDaugiau5);
-	auto low = lower_bound(grupe.begin(), grupe.end(), 5.0, palygGal);
+	auto low = find_if(grupe.begin(), grupe.end(), galDaugiau5);
+	//auto low = lower_bound(grupe.begin(), grupe.end(), 5.0, palygGal);
 	list<studentas> kieti(low, grupe.end());
 	grupe.resize(grupe.size() - kieti.size());
 	return kieti;
