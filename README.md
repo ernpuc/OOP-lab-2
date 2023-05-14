@@ -7,6 +7,9 @@
 
 ## Programos versijos
 
+### v1.5
+- Studento klasei sukurta abstrakti bazinė žmogaus klasė
+- 
 ### v1.2
 - Pridėti copy ir move konstruktoriai bei priskyrimo operatoriai
 
