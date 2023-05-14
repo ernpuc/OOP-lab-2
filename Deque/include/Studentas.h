@@ -10,17 +10,27 @@ using std::deque;
 using std::accumulate;
 using std::tie;
 
-class studentas {
-private:
+class zmogus {
+protected:
 	string vardas_;
 	string pavarde_;
+public:
+	zmogus(string vardas = "", string pavarde = "") : vardas_(vardas), pavarde_(pavarde) {}
+	virtual string vardas() const = 0;
+	virtual string pavarde() const = 0;
+	virtual void setVardas(string vardas) = 0;
+	virtual void setPavarde(string pavarde) = 0;
+};
+
+class studentas: public zmogus {
+private:
 	deque<int> paz_;
 	int egz_;
 	double galPaz_;
 public:
-	studentas() : vardas_(""), pavarde_(""), egz_(0), galPaz_(0) {};
+	studentas() : zmogus(), egz_(0), galPaz_(0) {};
 	studentas(std::istream& is);
-	studentas(string vardas, string pavarde, deque<int>paz, int egz) : vardas_(vardas), pavarde_(pavarde), paz_(paz), egz_(egz), galPaz_(0) {};
+	studentas(string vardas, string pavarde, deque<int>paz, int egz) : zmogus(vardas, pavarde), paz_(paz), egz_(egz), galPaz_(0) {};
 	studentas(const studentas& stud);
 	studentas& operator=(const studentas& stud);
 	studentas(studentas&& stud);

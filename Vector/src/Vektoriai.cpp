@@ -1,6 +1,9 @@
 ﻿#include "Mylib.h"
 
 int main() {
+	//zmogus zmog("Ernestas", "Pucinskas");
+	//cout << zmog.vardas() << " " << zmog.pavarde();
+
 	//string vardas = "vardas", pavarde = "pavarde";
 	//studentas stud1(vardas, pavarde, { 1, 2, 3, 6 }, 8);
 	//studentas stud2(stud1);

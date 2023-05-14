@@ -29,8 +29,7 @@ studentas& studentas::operator=(const studentas& stud) {
 }
 
 studentas::studentas(studentas&& stud) :
-	vardas_(stud.vardas_),
-	pavarde_(stud.pavarde_),
+	zmogus(stud.vardas_, stud.pavarde_),
 	paz_(std::move(stud.paz_)),
 	egz_(stud.egz_),
 	galPaz_(stud.galPaz_)
