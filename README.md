@@ -1,4 +1,4 @@
-# Objektinio programavimo pirmas laboratorinis darbas
+# Objektinio programavimo antras laboratorinis darbas
 
 ## Naudojimosi instrukcija
 
@@ -6,6 +6,12 @@
 - Paleidus .exe failą sekti konsolėje esančias instrukcijas (programos pradžioje pasirinktos komandos lems programos vykdymo ypatumus)
 
 ## Programos versijos
+
+### v1.5
+- Studento klasei sukurta abstrakti bazinė žmogaus klasė
+
+### v1.2
+- Pridėti copy ir move konstruktoriai bei priskyrimo operatoriai
 
 ### v1.1
 - Programa realizuota su klasėmmis
@@ -192,26 +198,3 @@ Listai:
 - Pagal formulę **_Galutinis = 0.4 * vidurkis + 0.6 * egzaminas_** apskaičiuojami studentų galutiniai pažymiai
 - Galima pasirinkti ar norima galutinį pažymį skaičiuoti su vidurkiu, su mediana, ar su abiejais
 - Galima pasirinkti ar duomenys suvedami ranka, ar sugeneruojami atsitiktinai
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
