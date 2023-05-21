@@ -1,11 +1,15 @@
 # Objektinio programavimo antras laboratorinis darbas
 
 ## Naudojimosi instrukcija
-
 - Norint įdiegti programą, paleisti RUNMEE.bat failą
+- Norint programą pridėti prie Start Menu paleisti VectorSetup.msi, DequeSetup.msi, arba ListSetup.msi failą
 - Paleidus .exe failą sekti konsolėje esančias instrukcijas (programos pradžioje pasirinktos komandos lems programos vykdymo ypatumus)
 
 ## Programos versijos
+
+### v2.0
+- Pridėtas setup failas
+- Pridėta Doxygen dokumentacija
 
 ### v1.5
 - Studento klasei sukurta abstrakti bazinė žmogaus klasė
