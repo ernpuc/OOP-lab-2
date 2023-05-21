@@ -1,3 +1,4 @@
+/*! \file spausdFunkcijos.cpp */
 #include "Mylib.h"
 
 void spausdinti(vector<studentas>& grupe, vector<double>& test_laikai) {
