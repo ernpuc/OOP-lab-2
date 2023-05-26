@@ -150,13 +150,6 @@ void myVector<T>::reserve(size_type new_size) {
 template<class T>
 void myVector<T>::shrink_to_fit(){
 	if (size() < capacity()) {
-		iterator new_data = alloc.allocate(size());
-		std::uninitialized_copy(data, avail, new_data);
-
-		uncreate();
-
-		data = new_data;
-		avail = data + size();
 		limit = avail;
 	}
 }
