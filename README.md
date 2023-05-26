@@ -1,11 +1,66 @@
-# Objektinio programavimo pirmas laboratorinis darbas
+# Objektinio programavimo antras laboratorinis darbas
 
 ## Naudojimosi instrukcija
-
 - Norint įdiegti programą, paleisti RUNMEE.bat failą
+- Norint programą pridėti prie Start Menu paleisti VectorSetup.msi, DequeSetup.msi, arba ListSetup.msi failą
 - Paleidus .exe failą sekti konsolėje esančias instrukcijas (programos pradžioje pasirinktos komandos lems programos vykdymo ypatumus)
 
 ## Programos versijos
+
+### v3.0
+- Vietoje std::vector sukurta myVector konteinerio klasė
+
+##### myVector metodų pavyzdžiai:
+- **bool empty() const;** - grąžina true, jei myVector yra tuščias
+- **size_type size() const;** - grąžina myVector priklausančių elementų skaičių
+- **void reserve(size_type n);** - leidžia reservuoti atminties n skaičiui myVector elementų
+- **iterator begin()** - grąžina rodyklę pirmo myVector elementą
+- **const T& back() const** - grąžina paskutinį myVector elementą
+
+#### Eksperimentiniai myVector klasės tyrimai
+Vektoriaus užpildymas naudojant push_back metodą
+| Įrašų skaičius                          |         10000  |        100000  |       1000000  |      10000000  |     100000000  |
+|-----------------------------------------|----------------|----------------|----------------|----------------|----------------|
+| std::vector                             |     0.000048s  |      0.000426s |      0.003110s |      0.026485s |      0.289204s |
+| myVector                                |     0.000020s  |      0.000142s |      0.001362s |      0.013666s |      0.320093s |
+
+#### Atminties perskirstymų skaičius užpildant vektorių iš 100000000 elementų:
+- std::vector atminties perskirstymų skaičius: 46
+- myVector atminties perskirstymų skaičius: 27
+
+#### Programos veikimo su std::vector ir myVector spartos palyginimas:
+**std::vector**
+| Įrašų skaičius:                         |      1000000   |     10000000   |
+|-----------------------------------------|----------------|----------------|
+| Failo nuskaitymas                       |     2.630919s  |    27.216297s  |
+| Duomenų rūšiavimas pagal pažymį         |     0.541180s  |     6.775741s  |
+| Duomenu skirstymas                      |     0.309938s  |     2.672978s  |
+| Duomenų rūšiavimas pagal pavardes       |     1.429264s  |    16.638833s  |
+| Rezultatų spausdinimas į vargsai.txt    |     0.421353s  |     4.341570s  |
+| Rezultatų spausdinimas į kieti.txt      |     0.428802s  |     4.353954s  |
+| Visas programos vykdymo laikas:         |     6.028816s  |    65.070791s  |
+
+**myVector**
+| Įrašų skaičius:                         |      1000000   |     10000000   |
+|-----------------------------------------|----------------|----------------|
+| Failo nuskaitymas                       |     2.451071s  |    26.405972s  |
+| Duomenų rūšiavimas pagal pažymį         |     1.506087s  |    12.574919s  |
+| Duomenu skirstymas                      |     0.247279s  |     2.759187s  |
+| Duomenų rūšiavimas pagal pavardes       |     2.778688s  |    35.697126s  |
+| Rezultatų spausdinimas į vargsai.txt    |     0.430967s  |     4.305387s  |
+| Rezultatų spausdinimas į kieti.txt      |     0.463371s  |     4.613767s  |
+| Visas programos vykdymo laikas:         |     8.103009s  |    88.689063s  |
+
+
+### v2.0
+- Pridėtas setup failas
+- Pridėta Doxygen dokumentacija
+
+### v1.5
+- Studento klasei sukurta abstrakti bazinė žmogaus klasė
+
+### v1.2
+- Pridėti copy ir move konstruktoriai bei priskyrimo operatoriai
 
 ### v1.1
 - Programa realizuota su klasėmmis
@@ -14,27 +69,27 @@
 
 v1.1
 
-| Irasu skaicius:                         |      1000000   |     10000000   |
+| Įrašų skaičius:                         |      1000000   |     10000000   |
 |-----------------------------------------|----------------|----------------|
 | Failo nuskaitymas                       |     2.489588s  |    25.402104s  |
-| Duomenu rusiavimas pagal pazymi         |     0.073588s  |     0.797581s  |
+| Duomenų rūšiavimas pagal pažymį         |     0.073588s  |     0.797581s  |
 | Duomenu skirstymas                      |     0.157918s  |     1.504101s  |
-| Duomenu rusiavimas pagal pavardes       |     0.973850s  |    11.752730s  |
-| Rezultatu spausdinimas i vargsai.txt    |     0.386475s  |     3.906130s  |
-| Rezultatu spausdinimas i kieti.txt      |     0.402160s  |     4.160941s  |
+| Duomenų rūšiavimas pagal pavardes       |     0.973850s  |    11.752730s  |
+| Rezultatų spausdinimas į vargsai.txt    |     0.386475s  |     3.906130s  |
+| Rezultatų spausdinimas į kieti.txt      |     0.402160s  |     4.160941s  |
 | Visas programos vykdymo laikas:         |     4.777175s  |    50.263985s  |
 
 
 v1.0
 
-| Irasu skaicius:                         |      1000000   |     10000000   |
+| Įrašų skaičius:                         |      1000000   |     10000000   |
 |-----------------------------------------|----------------|----------------|
 | Failo nuskaitymas                       |     1.935183s  |    19.500268s  |
-| Duomenu rusiavimas pagal pazymi         |     0.072969s  |     0.802412s  |
+| Duomenų rūšiavimas pagal pažymį         |     0.072969s  |     0.802412s  |
 | Duomenu skirstymas                      |     0.129385s  |     1.373299s  |
-| Duomenu rusiavimas pagal pavardes       |     0.459012s  |     5.295557s  |
-| Rezultatu spausdinimas i vargsai.txt    |     0.375047s  |     3.987322s  |
-| Rezultatu spausdinimas i kieti.txt      |     0.394954s  |     3.947082s  |
+| Duomenų rūšiavimas pagal pavardes       |     0.459012s  |     5.295557s  |
+| Rezultatų spausdinimas į vargsai.txt    |     0.375047s  |     3.987322s  |
+| Rezultatų spausdinimas į kieti.txt      |     0.394954s  |     3.947082s  |
 | Visas programos vykdymo laikas:         |     3.605573s  |    37.451121s  |
 
 
@@ -42,42 +97,42 @@ v1.0
 
 -O1
 
-| Irasu skaicius:                         |      1000000   |     10000000   |
+| Įrašų skaičius:                         |      1000000   |     10000000   |
 |-----------------------------------------|----------------|----------------|
 | Failo nuskaitymas                       |     2.596605s  |    26.404050s  |
-| Duomenu rusiavimas pagal pazymi         |     0.105774s  |     1.050675s  |
+| Duomenų rūšiavimas pagal pažymį         |     0.105774s  |     1.050675s  |
 | Duomenu skirstymas                      |     0.192379s  |     2.078027s  |
-| Duomenu rusiavimas pagal pavardes       |     1.101112s  |    13.076459s  |
-| Rezultatu spausdinimas i vargsai.txt    |     0.403579s  |     3.895943s  |
-| Rezultatu spausdinimas i kieti.txt      |     0.433215s  |     4.195289s  |
+| Duomenų rūšiavimas pagal pavardes       |     1.101112s  |    13.076459s  |
+| Rezultatų spausdinimas į vargsai.txt    |     0.403579s  |     3.895943s  |
+| Rezultatų spausdinimas į kieti.txt      |     0.433215s  |     4.195289s  |
 | Visas programos vykdymo laikas:         |     5.085841s  |    53.189120s  |
 
 -Vector.exe užima 88,5 KB 
 
 -O2
 
-| Irasu skaicius:                         |      1000000   |     10000000   |
+| Įrašų skaičius:                         |      1000000   |     10000000   |
 |-----------------------------------------|----------------|----------------|
 | Failo nuskaitymas                       |     2.489588s  |    25.402104s  |
-| Duomenu rusiavimas pagal pazymi         |     0.073588s  |     0.797581s  |
+| Duomenų rūšiavimas pagal pažymį         |     0.073588s  |     0.797581s  |
 | Duomenu skirstymas                      |     0.157918s  |     1.504101s  |
-| Duomenu rusiavimas pagal pavardes       |     0.973850s  |    11.752730s  |
-| Rezultatu spausdinimas i vargsai.txt    |     0.386475s  |     3.906130s  |
-| Rezultatu spausdinimas i kieti.txt      |     0.402160s  |     4.160941s  |
+| Duomenų rūšiavimas pagal pavardes       |     0.973850s  |    11.752730s  |
+| Rezultatų spausdinimas į vargsai.txt    |     0.386475s  |     3.906130s  |
+| Rezultatų spausdinimas į kieti.txt      |     0.402160s  |     4.160941s  |
 | Visas programos vykdymo laikas:         |     4.777175s  |    50.263985s  |
 
 -Vector.exe užima 105 KB
 
 -Ox
 
-| Irasu skaicius:                         |      1000000   |     10000000   |
+| Įrašų skaičius:                         |      1000000   |     10000000   |
 |-----------------------------------------|----------------|----------------|
 | Failo nuskaitymas                       |     2.538286s  |    26.688960s  |
-| Duomenu rusiavimas pagal pazymi         |     0.074360s  |     0.788425s  |
+| Duomenų rūšiavimas pagal pažymį         |     0.074360s  |     0.788425s  |
 | Duomenu skirstymas                      |     0.191593s  |     2.049583s  |
-| Duomenu rusiavimas pagal pavardes       |     0.932755s  |    11.161583s  |
-| Rezultatu spausdinimas i vargsai.txt    |     0.399271s  |     3.904824s  |
-| Rezultatu spausdinimas i kieti.txt      |     0.429001s  |     4.163725s  |
+| Duomenų rūšiavimas pagal pavardes       |     0.932755s  |    11.161583s  |
+| Rezultatų spausdinimas į vargsai.txt    |     0.399271s  |     3.904824s  |
+| Rezultatų spausdinimas į kieti.txt      |     0.429001s  |     4.163725s  |
 | Visas programos vykdymo laikas:         |     4.793937s  |    51.256823s  |
 
 -Vector.exe užima 107 KB
@@ -93,7 +148,7 @@ v1.0
 
 ##### Vektoriai
 
-| Irasu skaicius:                         |         1000   |        10000   |       100000   |      1000000   |     10000000   |
+| Įrašų skaičius:                         |         1000   |        10000   |       100000   |      1000000   |     10000000   |
 |-----------------------------------------|----------------|----------------|----------------|----------------|----------------|
 | Duomenu skirstymas (pirma strategija)   |     0.000226s  |     0.002328s  |     0.027280s  |     0.377596s  |     3.884641s  |
 | Duomenu skirstymas (antra strategija)   |     0.000146s  |     0.001037s  |     0.013651s  |     0.159438s  |     1.435591s  |
@@ -101,7 +156,7 @@ v1.0
 
 ##### Dekai
 
-| Irasu skaicius:                         |         1000   |        10000   |       100000   |      1000000   |     10000000   |
+| Įrašų skaičius:                         |         1000   |        10000   |       100000   |      1000000   |     10000000   |
 |-----------------------------------------|----------------|----------------|----------------|----------------|----------------|
 | Duomenu skirstymas (pirma strategija)   |     0.000575s  |     0.006810s  |     0.097976s  |     1.025728s  |    14.279388s  |
 | Duomenu skirstymas (antra strategija)   |     0.000125s  |     0.001727s  |     0.029781s  |     0.348508s  |     3.847409s  |
@@ -109,7 +164,7 @@ v1.0
 
 ##### Listai
 
-| Irasu skaicius:                         |         1000   |        10000   |       100000   |      1000000   |     10000000   |
+| Įrašų skaičius:                         |         1000   |        10000   |       100000   |      1000000   |     10000000   |
 |-----------------------------------------|----------------|----------------|----------------|----------------|----------------|
 | Duomenu skirstymas (pirma strategija)   |     0.000593s  |     0.008448s  |     0.126668s  |     1.290652s  |    16.339081s  |
 | Duomenu skirstymas (antra strategija)   |     0.000135s  |     0.001842s  |     0.033589s  |     0.447529s  |     5.253159s  |
@@ -192,26 +247,3 @@ Listai:
 - Pagal formulę **_Galutinis = 0.4 * vidurkis + 0.6 * egzaminas_** apskaičiuojami studentų galutiniai pažymiai
 - Galima pasirinkti ar norima galutinį pažymį skaičiuoti su vidurkiu, su mediana, ar su abiejais
 - Galima pasirinkti ar duomenys suvedami ranka, ar sugeneruojami atsitiktinai
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

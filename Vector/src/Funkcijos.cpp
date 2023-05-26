@@ -1,8 +1,9 @@
+/*! \file Funkcijos.cpp */
 #include "Mylib.h"
 
 int uzkl_iv = 0;
 int uzkl_skirst = 0;
-int uzkl_paz = 0;
+int uzkl_paz = 1;
 int uzkl_spausd = 0;
 int uzkl_vykd = 0;
 

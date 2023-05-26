@@ -1,3 +1,4 @@
+/*! \file Mylib.h */
 #pragma once
 #include <iostream>
 #include <sstream>
@@ -8,6 +9,7 @@
 #include <random>
 #include <vector>
 #include <chrono>
+#include <utility>
 #include "Studentas.h"
 
 using std::cout;

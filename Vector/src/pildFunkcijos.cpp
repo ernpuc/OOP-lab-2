@@ -1,3 +1,4 @@
+/*! \file pildFunkcijos.cpp */
 #include "Mylib.h"
 
 //Duomenu ivedimas ranka
